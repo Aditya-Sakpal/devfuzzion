@@ -1,39 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>View 3D Object in AR</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      body { margin: 0; background: #000; }
-      model-viewer { width: 100vw; height: 100vh; }
-    </style>
-  </head>
-  <body>
+<head>
+  <title>3D Object with Social Links</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; overflow: hidden; }
+    model-viewer { width: 100vw; height: 100vh; }
+    .social-links {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .social-links a {
+      text-align: center;
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    #ar-button {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
 <model-viewer
+  id="viewer"
   src="https://dl.dropboxusercontent.com/scl/fi/aun3l1o2aixe1jvhmn4zx/devfuzzion_reduced.glb?rlkey=8jrh29mc0t0f0gj59yfxjylss&st=7hu10x9h"
   ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
   ar
   ar-modes="webxr scene-viewer quick-look"
   auto-rotate
   camera-controls
-  autoplay
   alt="DevFuzzion 3D Object"
-  style="width: 100vw; height: 100vh;"
 >
-  <button slot="ar-button" style="
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 24px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-  ">View in Your Space</button>
+  <button slot="ar-button" id="ar-button">View in Your Space</button>
 </model-viewer>
-  </body>
+
+<div class="social-links" id="socialLinks">
+  <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
+  <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+  <a href="https://twitter.com/yourprofile" target="_blank">Twitter</a>
+</div>
+
+<script>
+  const viewer = document.getElementById('viewer');
+  const socialLinks = document.getElementById('socialLinks');
+
+  viewer.addEventListener('click', () => {
+    socialLinks.style.display = socialLinks.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  viewer.addEventListener('ar-status', (event) => {
+    if (event.detail.status === 'session-started') {
+      socialLinks.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
 </html>
