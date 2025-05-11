@@ -15,6 +15,7 @@
       display: none;
       flex-direction: column;
       gap: 10px;
+      z-index: 10;
     }
     .social-links a {
       text-align: center;
@@ -37,6 +38,7 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      z-index: 10;
     }
   </style>
 </head>
@@ -51,6 +53,7 @@
   auto-rotate
   camera-controls
   alt="DevFuzzion 3D Object"
+  style="width: 100vw; height: 100vh; background-color: transparent;"
 >
   <button slot="ar-button" id="ar-button">View in Your Space</button>
 </model-viewer>
@@ -65,10 +68,16 @@
   const viewer = document.getElementById('viewer');
   const socialLinks = document.getElementById('socialLinks');
 
-  viewer.addEventListener('click', () => {
-    socialLinks.style.display = socialLinks.style.display === 'flex' ? 'none' : 'flex';
+  // Use pointerdown to simulate object click
+  viewer.addEventListener('pointerdown', () => {
+    if (socialLinks.style.display === 'flex') {
+      socialLinks.style.display = 'none';
+    } else {
+      socialLinks.style.display = 'flex';
+    }
   });
 
+  // Hide links when AR session starts
   viewer.addEventListener('ar-status', (event) => {
     if (event.detail.status === 'session-started') {
       socialLinks.style.display = 'none';
