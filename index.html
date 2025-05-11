@@ -10,29 +10,30 @@
     </style>
   </head>
   <body>
-    <model-viewer
-      src="https://dl.dropboxusercontent.com/scl/fi/aun3l1o2aixe1jvhmn4zx/devfuzzion_reduced.glb?rlkey=8jrh29mc0t0f0gj59yfxjylss&st=7hu10x9h"
-      ar
-      ar-modes="webxr scene-viewer quick-look"
-      camera-controls
-      auto-rotate
-      autoplay
-      exposure="1"
-      alt="3D Object"
-    >
-      <button slot="ar-button" style="
-        position: absolute;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 24px;
-        background: black;
-        color: white;
-        font-size: 16px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-      ">View in Your Space</button>
-    </model-viewer>
+<model-viewer
+  src="https://dl.dropboxusercontent.com/scl/fi/aun3l1o2aixe1jvhmn4zx/devfuzzion_reduced.glb?rlkey=8jrh29mc0t0f0gj59yfxjylss&st=7hu10x9h"
+  ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  auto-rotate
+  camera-controls
+  autoplay
+  alt="DevFuzzion 3D Object"
+  style="width: 100vw; height: 100vh;"
+>
+  <button slot="ar-button" style="
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  ">View in Your Space</button>
+</model-viewer>
   </body>
 </html>
