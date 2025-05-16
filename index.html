@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DevFuzzion | Innovate. Automate. Elevate.</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       overflow: hidden;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: url('https://previews.dropbox.com/p/thumb/ACpWfa4iDXgY_MsezxGEYaxvRigt7fbQJ7oEJZ2Yak1wJDClaZb3YGBj7JcxTBXsnvVO_WoqeNNdzpaT2d1F49nRHaWwhRNYIHDNfMcyEj0BqCGI6MmTZV3Gy9Zvz59yXwo3yVwsXzwMFfRmfiwvsSbknvae5xMTXuNWjX9pK9Oarir3xizPMPPmlankGLn5ZdE3Y_KdJ5IZTHlT2RsJItgys-F6sCcb2-ap5iTE2FjHXzGCi7zG8oNPwP6zrVnKXO6QgVjsAJIs7oNGBaLFSjHk7XoSyasT-d0tw2LoUznS1Q--b2-9Vgnf5C154FG3y7cRj3pTNy70X553rrUcJmZ2/p.jpeg?is_prewarmed=true') no-repeat center center fixed;
+      background-size: cover;
       color: #ffffff;
     }
     model-viewer {
@@ -25,10 +25,14 @@
       bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
-      display: none;
+      display: flex;
       flex-direction: row;
       gap: 20px;
       z-index: 10;
+      transition: opacity 0.3s ease;
+    }
+    .social-links.hidden {
+      display: none;
     }
     .social-links a {
       display: flex;
@@ -84,7 +88,7 @@
 <body>
 
   <div class="branding">
-    <img src="https://www.devfuzzion.com/wp-content/uploads/2023/11/cropped-DevFuzzion-Logo-White.png" alt="DevFuzzion Logo">
+    <img src="https://previews.dropbox.com/p/thumb/ACrlUQ6CpPZhRPLDQ0tFxjLIvvi8uZknrc7KNUEoDpiiBAZbITis6Ybx7Z3r-e7fS8Bgx2kvdGVU5UVllCW_SDPp4GcgnSIE6kwsWmQxzujaiMCxltPeg3qwevT4EwIgPWS-rmODkOYLoJBAKODLu7CYgy0ajIBpFRh39kieAQ9GfwncrQ1xORe35vMtXf-GKA48w8-YaujUdvL6ZzDufsHyBjbLdr_88RaKqFOJyWtTJbijtiHSu6MgvcbfU6CWqyd7cAPx3Cpqj8adqp1HO1Qx1z-JS7zZrR2r0MSu19LMzSv9qxI7RpRwAuy8yKF43pWN8wyhqMj_OV4TuzXnmAhy/p.png?is_prewarmed=true" alt="DevFuzzion Icon">
     <span>DevFuzzion</span>
   </div>
 
@@ -95,6 +99,7 @@
     ar
     ar-modes="webxr scene-viewer quick-look"
     auto-rotate
+    rotation-per-second="60deg"
     camera-controls
     alt="DevFuzzion 3D Object"
   >
@@ -116,16 +121,17 @@
   <script>
     const viewer = document.getElementById('viewer');
     const socialLinks = document.getElementById('socialLinks');
+    let showSocial = true;
 
-    // Toggle social links on model tap
-    viewer.addEventListener('pointerdown', () => {
-      socialLinks.style.display = socialLinks.style.display === 'flex' ? 'none' : 'flex';
+    // Toggle social links on screen click
+    window.addEventListener('click', () => {
+      showSocial = !showSocial;
+      socialLinks.classList.toggle('hidden', !showSocial);
     });
 
-    // Hide links when AR session starts
     viewer.addEventListener('ar-status', (event) => {
       if (event.detail.status === 'session-started') {
-        socialLinks.style.display = 'none';
+        socialLinks.classList.add('hidden');
       }
     });
   </script>
