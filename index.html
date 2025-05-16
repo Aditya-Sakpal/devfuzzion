@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D Object with Social Links</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <title>3D Spline Object with Social Links</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { margin: 0; overflow: hidden; }
-    model-viewer { width: 100vw; height: 100vh; }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
     .social-links {
       position: absolute;
       bottom: 100px;
@@ -26,37 +29,11 @@
       text-decoration: none;
       font-size: 16px;
     }
-    #ar-button {
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      background: black;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 10;
-    }
   </style>
 </head>
 <body>
 
-<model-viewer
-  id="viewer"
-  src="https://dl.dropboxusercontent.com/scl/fi/aun3l1o2aixe1jvhmn4zx/devfuzzion_reduced.glb?rlkey=8jrh29mc0t0f0gj59yfxjylss&st=7hu10x9h"
-  ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
-  ar
-  ar-modes="webxr scene-viewer quick-look"
-  auto-rotate
-  camera-controls
-  alt="DevFuzzion 3D Object"
-  style="width: 100vw; height: 100vh; background-color: transparent;"
->
-  <button slot="ar-button" id="ar-button">View in Your Space</button>
-</model-viewer>
+<iframe id="splineFrame" src="https://my.spline.design/untitledcopy-1d1503ad48474bd446cc206e8fd1fb05/"></iframe>
 
 <div class="social-links" id="socialLinks">
   <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
@@ -65,22 +42,15 @@
 </div>
 
 <script>
-  const viewer = document.getElementById('viewer');
+  const iframe = document.getElementById('splineFrame');
   const socialLinks = document.getElementById('socialLinks');
 
-  // Use pointerdown to simulate object click
-  viewer.addEventListener('pointerdown', () => {
+  // Toggle links on click anywhere in the iframe container
+  window.addEventListener('click', () => {
     if (socialLinks.style.display === 'flex') {
       socialLinks.style.display = 'none';
     } else {
       socialLinks.style.display = 'flex';
-    }
-  });
-
-  // Hide links when AR session starts
-  viewer.addEventListener('ar-status', (event) => {
-    if (event.detail.status === 'session-started') {
-      socialLinks.style.display = 'none';
     }
   });
 </script>
