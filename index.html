@@ -1,30 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>3D Object with Social Links</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevFuzzion | Innovate. Automate. Elevate.</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; overflow: hidden; }
-    model-viewer { width: 100vw; height: 100vh; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+    }
+    model-viewer {
+      width: 100vw;
+      height: 100vh;
+      background-color: transparent;
+    }
     .social-links {
       position: absolute;
       bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
       display: none;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: row;
+      gap: 20px;
       z-index: 10;
     }
     .social-links a {
-      text-align: center;
-      padding: 10px 20px;
-      background: #000;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .social-links img {
+      width: 30px;
+      height: 30px;
     }
     #ar-button {
       position: absolute;
@@ -32,58 +53,82 @@
       left: 50%;
       transform: translateX(-50%);
       padding: 12px 24px;
-      background: black;
-      color: white;
+      background: #ffffff;
+      color: #000000;
       font-size: 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       z-index: 10;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .branding {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .branding img {
+      height: 40px;
+    }
+    .branding span {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffffff;
     }
   </style>
 </head>
 <body>
 
-<model-viewer
-  id="viewer"
-  src="https://dl.dropboxusercontent.com/scl/fi/aun3l1o2aixe1jvhmn4zx/devfuzzion_reduced.glb?rlkey=8jrh29mc0t0f0gj59yfxjylss&st=7hu10x9h"
-  ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
-  ar
-  ar-modes="webxr scene-viewer quick-look"
-  auto-rotate
-  camera-controls
-  alt="DevFuzzion 3D Object"
-  style="width: 100vw; height: 100vh; background-color: transparent;"
->
-  <button slot="ar-button" id="ar-button">View in Your Space</button>
-</model-viewer>
+  <div class="branding">
+    <img src="https://www.devfuzzion.com/wp-content/uploads/2023/11/cropped-DevFuzzion-Logo-White.png" alt="DevFuzzion Logo">
+    <span>DevFuzzion</span>
+  </div>
 
-<div class="social-links" id="socialLinks">
-  <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
-  <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
-  <a href="https://twitter.com/yourprofile" target="_blank">Twitter</a>
-</div>
+  <model-viewer
+    id="viewer"
+    src="https://dl.dropboxusercontent.com/scl/fi/aun3l1o2aixe1jvhmn4zx/devfuzzion_reduced.glb?rlkey=8jrh29mc0t0f0gj59yfxjylss&st=7hu10x9h"
+    ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
+    ar
+    ar-modes="webxr scene-viewer quick-look"
+    auto-rotate
+    camera-controls
+    alt="DevFuzzion 3D Object"
+  >
+    <button slot="ar-button" id="ar-button">View in Your Space</button>
+  </model-viewer>
 
-<script>
-  const viewer = document.getElementById('viewer');
-  const socialLinks = document.getElementById('socialLinks');
+  <div class="social-links" id="socialLinks">
+    <a href="https://www.instagram.com/devfuzzion" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+    <a href="https://www.linkedin.com/company/106130034" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+    </a>
+    <a href="https://x.com/devfuzzion" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X (Twitter)">
+    </a>
+  </div>
 
-  // Use pointerdown to simulate object click
-  viewer.addEventListener('pointerdown', () => {
-    if (socialLinks.style.display === 'flex') {
-      socialLinks.style.display = 'none';
-    } else {
-      socialLinks.style.display = 'flex';
-    }
-  });
+  <script>
+    const viewer = document.getElementById('viewer');
+    const socialLinks = document.getElementById('socialLinks');
 
-  // Hide links when AR session starts
-  viewer.addEventListener('ar-status', (event) => {
-    if (event.detail.status === 'session-started') {
-      socialLinks.style.display = 'none';
-    }
-  });
-</script>
+    // Toggle social links on model tap
+    viewer.addEventListener('pointerdown', () => {
+      socialLinks.style.display = socialLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Hide links when AR session starts
+    viewer.addEventListener('ar-status', (event) => {
+      if (event.detail.status === 'session-started') {
+        socialLinks.style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
 </html>
