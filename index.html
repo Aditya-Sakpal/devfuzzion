@@ -2,112 +2,131 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DevFuzzion</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="icon" type="image/png" href="devfuzzion_logo.png">
+
+  
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            padding-left: 2%;
-            padding-right: 2%;
-            font-family: 'Orbitron', sans-serif;
-            background: url('background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+      body {
+        margin: 0;
+        overflow: hidden;
+        padding-left: 2%;
+        padding-right: 2%;
+        font-family: 'Poppins', sans-serif;
+        background: url('background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+  
+      .main-container {
+        width: 70%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .branding-container,
+      .model-container {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .main-container {
-            width: 70%;
-            height: 80%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /* border: 1px solid #ffffff; */
-        }
-
-        .branding-container,
-        .model-container {
-            width: 80%;
-            height: 20%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* border: 1px solid #ffffff; */
-        }
-
-        .branding-container {
-            height: 60%;
-        }
-
-        .socials-container {
-            width: 100%;
-            height: 20%;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            align-items: center;
-            /* border: 1px solid #ffffff; */
-        }
-
-        .socials-container a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgb(137, 137, 137);
-            border: 0.5px solid #ffffff;
-            color: #ffffff !important;
-            opacity: 0.5;
-            border-radius: 50%;
-            text-decoration: none;
-        }
-
-        .socials-container a i {
-            color: white;
-            font-size: 24px;
-            transition: color 0.3s ease;
-        }
-
-        .socials-container a:hover i {
-            color: #aaaaaa;
-        }
-
-        .view-in-your-workspace {
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            background-color: #ffffff;
-            color: #000000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-            border: none;
-        }
-
-        .view-in-your-workspace:hover {
-            background-color: #000000;
-            color: #ffffff;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            transform: scale(1.05);
-        }
+      .model-container {
+        height: 20%;
+      }
+  
+      .branding-container {
+        height: 30%;
+      }
+  
+      .branding-container img {
+        width: 140%;
+        height: 140%;
+        object-fit: contain;
+      }
+  
+      .socials-container {
+        width: 100%;
+        height: 15%;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+      }
+  
+      .socials-container a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        background-color: rgba(0, 0, 0, 0.4); /* subtle black */
+        border: none;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+  
+      .socials-container a i {
+        color: #ffffff;
+        font-size: 18px;
+      }
+  
+      .socials-container a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+  
+      .view-in-your-workspace {
+        margin-top: 30%;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        background-color: #ffffff;
+        color: #000000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      }
+  
+      .view-in-your-workspace:hover {
+        background-color: #000000;
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1.05);
+      }
+  
+      .userInput,
+      .screen-reader-only,
+      .show {
+        display: none !important;
+      }
     </style>
-</head>
-
+  </head>
+  
 <body>
     <div class="main-container">
         <div class="branding-container">
-            <!-- Add your logo or branding content here -->
+            <img src="devfuzzion_logo2.png" alt="DevFuzzion Logo" class="logo">
         </div>
         <div class="socials-container">
             <a href="https://www.instagram.com/devfuzzion" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -124,6 +143,7 @@
             auto-rotate
             camera-controls
             alt="DevFuzzion 3D Object"
+            reveal="ar"
           >
             <button class="view-in-your-workspace" slot="ar-button" id="ar-button">DevFuzzion in Your Space</button>
           </model-viewer>
