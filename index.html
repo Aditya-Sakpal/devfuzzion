@@ -135,41 +135,29 @@
             <a href="https://www.linkedin.com/company/106130034" target="_blank"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
         </div>
-        <div class="model-container">
-            <model-viewer
-  id="viewer"
-  src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-  ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz"
-  alt="DevFuzzion 3D Object"
-  auto-rotate
-  camera-controls
-  ar
-  ar-modes="scene-viewer quick-look webxr"
-  style="height: 0; width: 0; visibility: hidden;"
->
-</model-viewer>
-
-<button class="view-in-your-workspace" id="ar-button" onclick="launchAR()">DevFuzzion in Your Space</button>
-
-<script>
-  function launchAR() {
-    const isAndroid = /android/i.test(navigator.userAgent);
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    if (isAndroid) {
-      // Manually open Scene Viewer
-      const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=https://devfuzzion.netlify.app/devfuzzion_reduced.glb&mode=ar_preferred#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
-      window.location.href = sceneViewerUrl;
-    } else if (isIOS) {
-      // iOS Quick Look
-      const usdzUrl = 'https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz';
-      window.location.href = usdzUrl;
-    } else {
-      alert("AR is only supported on Android and iOS devices.");
-    }
-  }
-</script>
-
+        <a
+        id="ar-button"
+        class="view-in-your-workspace"
+        href="https://arvr.google.com/scene-viewer/1.0"
+        rel="ar"
+        target="_blank"
+        data-file="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+        data-title="DevFuzzion"
+        data-mode="ar_preferred"
+      >
+        DevFuzzion in Your Space
+      </a>
+      
+      <script>
+        const arButton = document.getElementById('ar-button');
+        const file = encodeURIComponent(arButton.getAttribute('data-file'));
+        const title = encodeURIComponent(arButton.getAttribute('data-title'));
+        const mode = arButton.getAttribute('data-mode');
+      
+        const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://your-netlify-site.netlify.app/;end;`;
+        arButton.setAttribute('href', sceneViewerURL);
+      </script>
+      
         </div>
 
     </div>
