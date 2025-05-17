@@ -137,32 +137,39 @@
         </div>
         <div class="model-container">
             <model-viewer
-            id="viewer"
-            src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-            ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            auto-rotate
-            camera-controls
-            alt="DevFuzzion 3D Object"
-            reveal="ar"
-          >
-            <button class="view-in-your-workspace" slot="ar-button" id="ar-button">DevFuzzion in Your Space</button>
-          </model-viewer>
-        
-          <script>
-            function triggerAR() {
-              document.getElementById('ar-button').click();
-            }
-        
-            const viewer = document.getElementById('viewer');
-        
-            viewer.addEventListener('ar-status', (event) => {
-              if (event.detail.status === 'session-started') {
-                console.log("AR session started");
-              }
-            });
-          </script>
+  id="viewer"
+  src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+  ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz"
+  alt="DevFuzzion 3D Object"
+  auto-rotate
+  camera-controls
+  ar
+  ar-modes="scene-viewer quick-look webxr"
+  style="height: 0; width: 0; visibility: hidden;"
+>
+</model-viewer>
+
+<button class="view-in-your-workspace" id="ar-button" onclick="launchAR()">DevFuzzion in Your Space</button>
+
+<script>
+  function launchAR() {
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+      // Manually open Scene Viewer
+      const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=https://devfuzzion.netlify.app/devfuzzion_reduced.glb&mode=ar_preferred#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
+      window.location.href = sceneViewerUrl;
+    } else if (isIOS) {
+      // iOS Quick Look
+      const usdzUrl = 'https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz';
+      window.location.href = usdzUrl;
+    } else {
+      alert("AR is only supported on Android and iOS devices.");
+    }
+  }
+</script>
+
         </div>
 
     </div>
