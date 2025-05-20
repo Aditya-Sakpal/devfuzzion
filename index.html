@@ -72,7 +72,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border : 1px solid white;
+        border: 1px solid white;
         width: 55px;
         height: 55px;
         color: white;
@@ -92,39 +92,68 @@
         transform: scale(1.1);
       }
   
-      .view-in-your-workspace {
-        margin-top: 28%;
-        padding: 10px 20px;
+      /* Enhanced AR Button Styling */
+      .ar-button-container {
+        margin-top: 20%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      
+      #ar-button {
+        padding: 15px 30px;
         border-radius: 50px;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 600;
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        background-color: transparent;
-        border : 0.5px solid white !important;
-        color: #ffffff !important;
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 1px solid white;
+        color: #ffffff;
         cursor: pointer;
         transition: all 0.3s ease;
-        border: none;
         box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        text-decoration: none !important;
+        outline: none;
+        position: relative;
+        overflow: hidden;
       }
-  
-      .view-in-your-workspace:hover {
-        background-color: #000000;
-        color: #ffffff;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      
+      #ar-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
       }
-  
+      
+      #ar-button:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+        box-shadow: 0 6px 12px rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      #ar-button:hover::before {
+        left: 100%;
+      }
+      
+      #ar-button:active {
+        transform: translateY(0);
+      }
+
       .userInput,
       .screen-reader-only,
       .show {
         display: none !important;
       }
       
-      /* Hide elements initially */
-      #ios-ar-container,
-      #android-ar-button {
-        display: none;
+      /* Make model-viewer take full container space */
+      model-viewer {
+        width: 100%;
+        height: 100%;
       }
     </style>
 </head>
@@ -140,69 +169,84 @@
             <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
         </div>
         
-        <!-- iOS AR Container (hidden by default) -->
-        <div id="ios-ar-container" class="model-container">
-            <model-viewer
-                id="viewer"
-                src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-                ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
-                ar
-                ar-modes="webxr scene-viewer quick-look"
-                auto-rotate
-                camera-controls
-                alt="DevFuzzion 3D Object"
-                reveal="ar"
-            >
-                <button class="view-in-your-workspace" slot="ar-button" id="ios-ar-button">DevFuzzion in Your Space</button>
-            </model-viewer>
+        <!-- Enhanced AR Button Container -->
+        <div class="ar-button-container">
+            <button id="ar-button" class="view-in-your-workspace">
+                DevFuzzion in Your Space
+            </button>
         </div>
-        
-        <!-- Android AR Button (hidden by default) -->
-        <a
-            id="android-ar-button"
-            class="view-in-your-workspace"
-            href="https://arvr.google.com/scene-viewer/1.0"
-            rel="ar"
-            target="_blank"
-            data-file="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-            data-title="DevFuzzion"
-            data-mode="ar_preferred"
-        >
-            DevFuzzion in Your Space
-        </a>
     </div>
     
     <script>
-        // Detect platform
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        
-        // Get references to the AR elements
-        const iosContainer = document.getElementById('ios-ar-container');
-        const androidButton = document.getElementById('android-ar-button');
-        
-        if (isIOS) {
-            // Show iOS AR viewer
-            iosContainer.style.display = 'flex';
-            
-            // Set up iOS AR viewer event listeners
-            const viewer = document.getElementById('viewer');
-            viewer.addEventListener('ar-status', (event) => {
-                if (event.detail.status === 'session-started') {
-                    console.log("AR session started");
-                }
-            });
-        } else {
-            // Show Android AR button
-            androidButton.style.display = 'block';
-            
-            // Set up Android intent URL
-            const file = encodeURIComponent(androidButton.getAttribute('data-file'));
-            const title = encodeURIComponent(androidButton.getAttribute('data-title'));
-            const mode = androidButton.getAttribute('data-mode');
-            
-            const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
-            androidButton.setAttribute('href', sceneViewerURL);
+        // Enhanced platform detection
+        function isIOS() {
+            return [
+                'iPad Simulator',
+                'iPhone Simulator',
+                'iPod Simulator',
+                'iPad',
+                'iPhone',
+                'iPod'
+            ].includes(navigator.platform) ||
+            (navigator.userAgent.includes("Mac") && "ontouchend" in document);
         }
+        
+        // Get reference to the AR button
+        const arButton = document.getElementById('ar-button');
+        
+        arButton.addEventListener('click', () => {
+            if (isIOS()) {
+                // For iOS - use direct Quick Look with USDZ file
+                const usdzFileUrl = 'https://devfuzzion.netlify.app/devfuzzion_reduced.usdz';
+                
+                // Create a temporary anchor tag to trigger the download/Quick Look
+                const anchor = document.createElement('a');
+                anchor.href = usdzFileUrl;
+                anchor.rel = 'ar';
+                anchor.innerHTML = `
+                    <img src="devfuzzion_logo2.png" alt="DevFuzzion AR Logo">
+                    <model-viewer 
+                        src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+                        ios-src="${usdzFileUrl}"
+                        ar
+                        ar-modes="quick-look"
+                        quick-look-browsers="safari"
+                        camera-controls
+                        alt="DevFuzzion 3D Object"
+                        ar-scale="fixed"
+                        style="display: none;">
+                    </model-viewer>
+                `;
+                
+                // Ensure no text decoration
+                anchor.style.textDecoration = 'none';
+                
+                // Append to body and click it
+                document.body.appendChild(anchor);
+                anchor.click();
+                
+                // Clean up after a short delay
+                setTimeout(() => {
+                    document.body.removeChild(anchor);
+                }, 100);
+            } else {
+                // For Android - use Scene Viewer
+                const file = encodeURIComponent('https://devfuzzion.netlify.app/devfuzzion_reduced.glb');
+                const title = encodeURIComponent('DevFuzzion');
+                const mode = 'ar_preferred';
+                
+                const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
+                
+                // Create a hidden link to avoid styling issues
+                const link = document.createElement('a');
+                link.href = sceneViewerURL;
+                link.style.display = 'none';
+                link.style.textDecoration = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
     </script>
 </body>
 </html>
