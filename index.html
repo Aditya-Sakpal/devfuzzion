@@ -72,7 +72,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border : 1px solid white;
+        border: 1px solid white;
         width: 55px;
         height: 55px;
         color: white;
@@ -101,7 +101,7 @@
         font-family: 'Poppins', sans-serif;
         text-align: center;
         background-color: transparent;
-        border : 0.5px solid white !important;
+        border: 0.5px solid white !important;
         color: #ffffff !important;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -126,6 +126,12 @@
       #android-ar-button {
         display: none;
       }
+      
+      /* Make model-viewer take full container space */
+      model-viewer {
+        width: 100%;
+        height: 100%;
+      }
     </style>
 </head>
   
@@ -145,13 +151,13 @@
             <model-viewer
                 id="viewer"
                 src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-                ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
+                ios-src="https://devfuzzion.netlify.app/devfuzzion_reduced.usdz"
                 ar
-                ar-modes="webxr scene-viewer quick-look"
-                auto-rotate
+                ar-modes="scene-viewer quick-look webxr"
+                quick-look-browsers="safari chrome"
                 camera-controls
                 alt="DevFuzzion 3D Object"
-                reveal="ar"
+                ar-scale="fixed"
             >
                 <button class="view-in-your-workspace" slot="ar-button" id="ios-ar-button">DevFuzzion in Your Space</button>
             </model-viewer>
@@ -173,14 +179,24 @@
     </div>
     
     <script>
-        // Detect platform
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        // Enhanced platform detection
+        function isIOS() {
+            return [
+                'iPad Simulator',
+                'iPhone Simulator',
+                'iPod Simulator',
+                'iPad',
+                'iPhone',
+                'iPod'
+            ].includes(navigator.platform) ||
+            (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+        }
         
         // Get references to the AR elements
         const iosContainer = document.getElementById('ios-ar-container');
         const androidButton = document.getElementById('android-ar-button');
         
-        if (isIOS) {
+        if (isIOS()) {
             // Show iOS AR viewer
             iosContainer.style.display = 'flex';
             
@@ -190,6 +206,12 @@
                 if (event.detail.status === 'session-started') {
                     console.log("AR session started");
                 }
+            });
+            
+            // Force Quick Look on iOS if needed
+            const arButton = document.getElementById('ios-ar-button');
+            arButton.addEventListener('click', () => {
+                viewer.activateAR();
             });
         } else {
             // Show Android AR button
