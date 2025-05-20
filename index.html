@@ -12,7 +12,6 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <link rel="icon" type="image/png" href="devfuzzion_logo.png">
 
-  
     <style>
       body {
         margin: 0;
@@ -77,8 +76,7 @@
         width: 55px;
         height: 55px;
         color: white;
-        background-color: rgba(0, 0, 0, 0.4); /* subtle black */
-        /* border: none; */
+        background-color: rgba(0, 0, 0, 0.4);
         border-radius: 50%;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.2s ease;
@@ -122,8 +120,14 @@
       .show {
         display: none !important;
       }
+      
+      /* Hide elements initially */
+      #ios-ar-container,
+      #android-ar-button {
+        display: none;
+      }
     </style>
-  </head>
+</head>
   
 <body>
     <div class="main-container">
@@ -135,38 +139,70 @@
             <a href="https://www.linkedin.com/company/106130034" target="_blank"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
         </div>
-        <div class="model-container">
+        
+        <!-- iOS AR Container (hidden by default) -->
+        <div id="ios-ar-container" class="model-container">
             <model-viewer
-            id="viewer"
-            src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-            ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            auto-rotate
-            camera-controls
-            alt="DevFuzzion 3D Object"
-            reveal="ar"
-          >
-            <button class="view-in-your-workspace" slot="ar-button" id="ar-button">DevFuzzion in Your Space</button>
-          </model-viewer>
-        
-          <script>
-            function triggerAR() {
-              document.getElementById('ar-button').click();
-            }
-        
-            const viewer = document.getElementById('viewer');
-        
-            viewer.addEventListener('ar-status', (event) => {
-              if (event.detail.status === 'session-started') {
-                console.log("AR session started");
-              }
-            });
-          </script>
+                id="viewer"
+                src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+                ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
+                ar
+                ar-modes="webxr scene-viewer quick-look"
+                auto-rotate
+                camera-controls
+                alt="DevFuzzion 3D Object"
+                reveal="ar"
+            >
+                <button class="view-in-your-workspace" slot="ar-button" id="ios-ar-button">DevFuzzion in Your Space</button>
+            </model-viewer>
         </div>
-
+        
+        <!-- Android AR Button (hidden by default) -->
+        <a
+            id="android-ar-button"
+            class="view-in-your-workspace"
+            href="https://arvr.google.com/scene-viewer/1.0"
+            rel="ar"
+            target="_blank"
+            data-file="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+            data-title="DevFuzzion"
+            data-mode="ar_preferred"
+        >
+            DevFuzzion in Your Space
+        </a>
     </div>
     
+    <script>
+        // Detect platform
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        // Get references to the AR elements
+        const iosContainer = document.getElementById('ios-ar-container');
+        const androidButton = document.getElementById('android-ar-button');
+        
+        if (isIOS) {
+            // Show iOS AR viewer
+            iosContainer.style.display = 'flex';
+            
+            // Set up iOS AR viewer event listeners
+            const viewer = document.getElementById('viewer');
+            viewer.addEventListener('ar-status', (event) => {
+                if (event.detail.status === 'session-started') {
+                    console.log("AR session started");
+                }
+            });
+        } else {
+            // Show Android AR button
+            androidButton.style.display = 'block';
+            
+            // Set up Android intent URL
+            const file = encodeURIComponent(androidButton.getAttribute('data-file'));
+            const title = encodeURIComponent(androidButton.getAttribute('data-title'));
+            const mode = androidButton.getAttribute('data-mode');
+            
+            const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
+            androidButton.setAttribute('href', sceneViewerURL);
+        }
+    </script>
 </body>
-
 </html>
