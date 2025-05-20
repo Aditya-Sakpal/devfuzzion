@@ -121,12 +121,6 @@
         display: none !important;
       }
       
-      /* Hide elements initially */
-      #ios-ar-container,
-      #android-ar-button {
-        display: none;
-      }
-      
       /* Make model-viewer take full container space */
       model-viewer {
         width: 100%;
@@ -146,36 +140,10 @@
             <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
         </div>
         
-        <!-- iOS AR Container (hidden by default) -->
-        <div id="ios-ar-container" class="model-container">
-            <model-viewer
-                id="viewer"
-                src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-                ios-src="https://devfuzzion.netlify.app/devfuzzion_reduced.usdz"
-                ar
-                ar-modes="scene-viewer quick-look webxr"
-                quick-look-browsers="safari chrome"
-                camera-controls
-                alt="DevFuzzion 3D Object"
-                ar-scale="fixed"
-            >
-                <button class="view-in-your-workspace" slot="ar-button" id="ios-ar-button">DevFuzzion in Your Space</button>
-            </model-viewer>
-        </div>
-        
-        <!-- Android AR Button (hidden by default) -->
-        <a
-            id="android-ar-button"
-            class="view-in-your-workspace"
-            href="https://arvr.google.com/scene-viewer/1.0"
-            rel="ar"
-            target="_blank"
-            data-file="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-            data-title="DevFuzzion"
-            data-mode="ar_preferred"
-        >
+        <!-- Single AR Button that works for both platforms -->
+        <button id="ar-button" class="view-in-your-workspace">
             DevFuzzion in Your Space
-        </a>
+        </button>
     </div>
     
     <script>
@@ -192,39 +160,53 @@
             (navigator.userAgent.includes("Mac") && "ontouchend" in document);
         }
         
-        // Get references to the AR elements
-        const iosContainer = document.getElementById('ios-ar-container');
-        const androidButton = document.getElementById('android-ar-button');
+        // Get reference to the AR button
+        const arButton = document.getElementById('ar-button');
         
-        if (isIOS()) {
-            // Show iOS AR viewer
-            iosContainer.style.display = 'flex';
-            
-            // Set up iOS AR viewer event listeners
-            const viewer = document.getElementById('viewer');
-            viewer.addEventListener('ar-status', (event) => {
-                if (event.detail.status === 'session-started') {
-                    console.log("AR session started");
-                }
-            });
-            
-            // Force Quick Look on iOS if needed
-            const arButton = document.getElementById('ios-ar-button');
-            arButton.addEventListener('click', () => {
-                viewer.activateAR();
-            });
-        } else {
-            // Show Android AR button
-            androidButton.style.display = 'block';
-            
-            // Set up Android intent URL
-            const file = encodeURIComponent(androidButton.getAttribute('data-file'));
-            const title = encodeURIComponent(androidButton.getAttribute('data-title'));
-            const mode = androidButton.getAttribute('data-mode');
-            
-            const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
-            androidButton.setAttribute('href', sceneViewerURL);
-        }
+        arButton.addEventListener('click', () => {
+            if (isIOS()) {
+                // For iOS - use direct Quick Look with USDZ file
+                const usdzFileUrl = 'https://devfuzzion.netlify.app/devfuzzion_reduced.usdz';
+                
+                // Create a temporary anchor tag to trigger the download/Quick Look
+                const anchor = document.createElement('a');
+                anchor.href = usdzFileUrl;
+                anchor.rel = 'ar';
+                anchor.innerHTML = `
+                    <img src="devfuzzion_logo2.png" alt="DevFuzzion AR Logo">
+                    <model-viewer 
+                        src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+                        ios-src="${usdzFileUrl}"
+                        ar
+                        ar-modes="quick-look"
+                        quick-look-browsers="safari"
+                        camera-controls
+                        alt="DevFuzzion 3D Object"
+                        ar-scale="fixed"
+                        style="display: none;">
+                    </model-viewer>
+                `;
+                
+                // Append to body and click it
+                document.body.appendChild(anchor);
+                anchor.click();
+                
+                // Clean up after a short delay
+                setTimeout(() => {
+                    document.body.removeChild(anchor);
+                }, 100);
+            } else {
+                // For Android - use Scene Viewer
+                const file = encodeURIComponent('https://devfuzzion.netlify.app/devfuzzion_reduced.glb');
+                const title = encodeURIComponent('DevFuzzion');
+                const mode = 'ar_preferred';
+                
+                const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
+                
+                // Redirect to the Scene Viewer intent
+                window.location.href = sceneViewerURL;
+            }
+        });
     </script>
 </body>
 </html>
