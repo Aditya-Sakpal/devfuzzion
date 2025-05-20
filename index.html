@@ -163,5 +163,24 @@
     </div>
     
 </body>
+<script>
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  const iOSModel = "https://devfuzzion.netlify.app/devfuzzion_reduced.usdz";
+  const androidModel = "https://devfuzzion.netlify.app/devfuzzion_reduced.glb";
+
+  // Reuse existing variables from previous script
+  const arButtonElement = document.getElementById("ar-button");
+  const titleValue = encodeURIComponent("DevFuzzion"); 
+  const modeValue = "ar_preferred";
+  const fallbackURLValue = encodeURIComponent("https://devfuzzion.netlify.app/");
+
+  if (isIOS) {
+    arButton.setAttribute("href", iOSModel);
+  } else {
+    const intentURL = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(androidModel)}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=${fallbackURL};end;`;
+    arButton.setAttribute("href", intentURL);
+  }
+</script>
 
 </html>
