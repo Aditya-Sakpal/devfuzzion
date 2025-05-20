@@ -2,166 +2,164 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevFuzzion</title>
-  
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <link rel="icon" type="image/png" href="devfuzzion_logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevFuzzion</title>
 
-  
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-        padding-left: 2%;
-        padding-right: 2%;
-        font-family: 'Poppins', sans-serif;
-        background: url('background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        color: #ffffff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-  
-      .main-container {
-        width: 70%;
-        height: 80%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-  
-      .branding-container,
-      .model-container {
-        width: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link rel="icon" type="image/png" href="devfuzzion_logo.png">
 
-      .model-container {
-        height: 20%;
-      }
-  
-      .branding-container {
-        height: 30%;
-      }
-  
-      .branding-container img {
-        width: 140%;
-        height: 140%;
-        object-fit: contain;
-      }
-  
-      .socials-container {
-        width: 100%;
-        height: 15%;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        align-items: center;
-      }
-  
-      .socials-container a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border : 1px solid white;
-        width: 55px;
-        height: 55px;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.4); /* subtle black */
-        /* border: none; */
-        border-radius: 50%;
-        text-decoration: none;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-      }
-  
-      .socials-container a i {
-        color: #ffffff;
-        font-size: 18px;
-      }
-  
-      .socials-container a:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: scale(1.1);
-      }
-  
-      .view-in-your-workspace {
-        margin-top: 28%;
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-size: 15px;
-        font-weight: 600;
-        font-family: 'Poppins', sans-serif;
-        text-align: center;
-        background-color: transparent;
-        border : 0.5px solid white !important;
-        color: #ffffff !important;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: none;
-        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-      }
-  
-      .view-in-your-workspace:hover {
-        background-color: #000000;
-        color: #ffffff;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-      }
-  
-      .userInput,
-      .screen-reader-only,
-      .show {
-        display: none !important;
-      }
-    </style>
-  </head>
-  
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      padding-left: 2%;
+      padding-right: 2%;
+      font-family: 'Poppins', sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .main-container {
+      width: 70%;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .branding-container,
+    .model-container {
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .model-container {
+      height: 20%;
+    }
+
+    .branding-container {
+      height: 30%;
+    }
+
+    .branding-container img {
+      width: 140%;
+      height: 140%;
+      object-fit: contain;
+    }
+
+    .socials-container {
+      width: 100%;
+      height: 15%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .socials-container a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid white;
+      width: 55px;
+      height: 55px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.4);
+      /* subtle black */
+      /* border: none; */
+      border-radius: 50%;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .socials-container a i {
+      color: #ffffff;
+      font-size: 18px;
+    }
+
+    .socials-container a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .view-in-your-workspace {
+      margin-top: 28%;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background-color: transparent;
+      border: 0.5px solid white !important;
+      color: #ffffff !important;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    }
+
+    .view-in-your-workspace:hover {
+      background-color: #000000;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .userInput,
+    .screen-reader-only,
+    .show {
+      display: none !important;
+    }
+  </style>
+</head>
+
 <body>
-    <div class="main-container">
-        <div class="branding-container">
-            <img src="devfuzzion_logo2.png" alt="DevFuzzion Logo" class="logo">
-        </div>
-        <div class="socials-container">
-            <a href="https://www.instagram.com/devfuzzion" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.linkedin.com/company/106130034" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
-        </div>
-        <a
-        id="ar-button"
-        class="view-in-your-workspace"
-        href="https://arvr.google.com/scene-viewer/1.0"
-        rel="ar"
-        target="_blank"
-        data-file="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-        data-title="DevFuzzion"
-        data-mode="ar_preferred"
-      >
+  <div class="main-container">
+    <div class="branding-container">
+      <img src="devfuzzion_logo2.png" alt="DevFuzzion Logo" class="logo">
+    </div>
+    <div class="socials-container">
+      <a href="https://www.instagram.com/devfuzzion" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/company/106130034" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    </div>
+    <model-viewer src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+      ios-src="https://devfuzzion.netlify.app/devfuzzion_reduced.usdz" ar ar-modes="scene-viewer quick-look"
+      camera-controls auto-rotate style="width: 100%; height: 300px;">
+      <a id="ar-button" class="view-in-your-workspace" href="https://arvr.google.com/scene-viewer/1.0" rel="ar"
+        target="_blank" data-file="https://devfuzzion.netlify.app/devfuzzion_reduced.glb" data-title="DevFuzzion"
+        data-mode="ar_preferred">
         DevFuzzion in Your Space
       </a>
-      
-      <script>
-        const arButton = document.getElementById('ar-button');
-        const file = encodeURIComponent(arButton.getAttribute('data-file'));
-        const title = encodeURIComponent(arButton.getAttribute('data-title'));
-        const mode = arButton.getAttribute('data-mode');
-      
-        const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://your-netlify-site.netlify.app/;end;`;
-        arButton.setAttribute('href', sceneViewerURL);
-      </script>
-      
-        </div>
+    </model-viewer>
 
-    </div>
-    
+    <script>
+      const arButton = document.getElementById('ar-button');
+      const file = encodeURIComponent(arButton.getAttribute('data-file'));
+      const title = encodeURIComponent(arButton.getAttribute('data-title'));
+      const mode = arButton.getAttribute('data-mode');
+
+      const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://your-netlify-site.netlify.app/;end;`;
+      arButton.setAttribute('href', sceneViewerURL);
+    </script>
+
+  </div>
+
+  </div>
+
 </body>
 <script>
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -171,7 +169,7 @@
 
   // Reuse existing variables from previous script
   const arButtonElement = document.getElementById("ar-button");
-  const titleValue = encodeURIComponent("DevFuzzion"); 
+  const titleValue = encodeURIComponent("DevFuzzion");
   const modeValue = "ar_preferred";
   const fallbackURLValue = encodeURIComponent("https://devfuzzion.netlify.app/");
 
