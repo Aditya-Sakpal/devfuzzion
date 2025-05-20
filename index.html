@@ -12,6 +12,7 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <link rel="icon" type="image/png" href="devfuzzion_logo.png">
 
+  
     <style>
       body {
         margin: 0;
@@ -72,11 +73,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid white;
+        border : 1px solid white;
         width: 55px;
         height: 55px;
         color: white;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.4); /* subtle black */
+        /* border: none; */
         border-radius: 50%;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.2s ease;
@@ -101,7 +103,7 @@
         font-family: 'Poppins', sans-serif;
         text-align: center;
         background-color: transparent;
-        border: 0.5px solid white !important;
+        border : 0.5px solid white !important;
         color: #ffffff !important;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -120,14 +122,8 @@
       .show {
         display: none !important;
       }
-      
-      /* Make model-viewer take full container space */
-      model-viewer {
-        width: 100%;
-        height: 100%;
-      }
     </style>
-</head>
+  </head>
   
 <body>
     <div class="main-container">
@@ -139,72 +135,38 @@
             <a href="https://www.linkedin.com/company/106130034" target="_blank"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://x.com/devfuzzion" target="_blank"><i class="fab fa-x-twitter"></i></a>
         </div>
+        <div class="model-container">
+            <model-viewer
+            id="viewer"
+            src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
+            ios-src="https://dl.dropboxusercontent.com/scl/fi/4pv6s8dsfe3onc4rzi0gi/devfuzzion_reduced.usdz?rlkey=e178uvgbpanj6z4gzqz8g7e5z&st=wgu069ym"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            auto-rotate
+            camera-controls
+            alt="DevFuzzion 3D Object"
+            reveal="ar"
+          >
+            <button class="view-in-your-workspace" slot="ar-button" id="ar-button">DevFuzzion in Your Space</button>
+          </model-viewer>
         
-        <!-- Single AR Button that works for both platforms -->
-        <button id="ar-button" class="view-in-your-workspace">
-            DevFuzzion in Your Space
-        </button>
+          <script>
+            function triggerAR() {
+              document.getElementById('ar-button').click();
+            }
+        
+            const viewer = document.getElementById('viewer');
+        
+            viewer.addEventListener('ar-status', (event) => {
+              if (event.detail.status === 'session-started') {
+                console.log("AR session started");
+              }
+            });
+          </script>
+        </div>
+
     </div>
     
-    <script>
-        // Enhanced platform detection
-        function isIOS() {
-            return [
-                'iPad Simulator',
-                'iPhone Simulator',
-                'iPod Simulator',
-                'iPad',
-                'iPhone',
-                'iPod'
-            ].includes(navigator.platform) ||
-            (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-        }
-        
-        // Get reference to the AR button
-        const arButton = document.getElementById('ar-button');
-        
-        arButton.addEventListener('click', () => {
-            if (isIOS()) {
-                // For iOS - use direct Quick Look with USDZ file
-                const usdzFileUrl = 'https://devfuzzion.netlify.app/devfuzzion_reduced.usdz';
-                
-                // Create a temporary anchor tag to trigger the download/Quick Look
-                const div = document.createElement('div');
-                div.innerHTML = `
-                    <img src="devfuzzion_logo2.png" alt="DevFuzzion AR Logo">
-                    <model-viewer 
-                        src="https://devfuzzion.netlify.app/devfuzzion_reduced.glb"
-                        ios-src="${usdzFileUrl}"
-                        ar
-                        ar-modes="quick-look"
-                        quick-look-browsers="safari"
-                        camera-controls
-                        alt="DevFuzzion 3D Object"
-                        ar-scale="fixed"
-                        style="display: none;">
-                    </model-viewer>
-                `;
-                
-                // Append to body and click it
-                document.body.appendChild(div);
-                div.click();
-                
-                // Clean up after a short delay
-                setTimeout(() => {
-                    document.body.removeChild(div);
-                }, 100);
-            } else {
-                // For Android - use Scene Viewer
-                const file = encodeURIComponent('https://devfuzzion.netlify.app/devfuzzion_reduced.glb');
-                const title = encodeURIComponent('DevFuzzion');
-                const mode = 'ar_preferred';
-                
-                const sceneViewerURL = `intent://arvr.google.com/scene-viewer/1.0?file=${file}&title=${title}&mode=${mode}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=https://devfuzzion.netlify.app/;end;`;
-                
-                // Redirect to the Scene Viewer intent
-                window.location.href = sceneViewerURL;
-            }
-        });
-    </script>
 </body>
+
 </html>
